@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom School Sweaters</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#3b82f6", secondary: "#64748b" },
+          borderRadius: {
+            none: "0px",
+            sm: "4px",
+            DEFAULT: "8px",
+            md: "12px",
+            lg: "16px",
+            xl: "20px",
+            "2xl": "24px",
+            "3xl": "32px",
+            full: "9999px",
+            button: "8px",
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+  />
+  <style>
+    :where([class^="ri-"])::before { content: "\f3c2"; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    .custom-checkbox {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .custom-checkbox input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    .checkmark {
+      height: 20px;
+      width: 20px;
+      background-color: #fff;
+      border: 2px solid #e5e7eb;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .custom-checkbox input:checked ~ .checkmark {
+      background-color: #3b82f6;
+      border-color: #3b82f6;
+    }
+    .checkmark:after {
+      content: "";
+      display: none;
+    }
+    .custom-checkbox input:checked ~ .checkmark:after {
+      display: block;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .custom-radio {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .custom-radio input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    .radiomark {
+      height: 20px;
+      width: 20px;
+      background-color: #fff;
+      border: 2px solid #e5e7eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .custom-radio input:checked ~ .radiomark {
+      border-color: #3b82f6;
+    }
+    .radiomark:after {
+      content: "";
+      display: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3b82f6;
+    }
+    .custom-radio input:checked ~ .radiomark:after {
+      display: block;
+    }
+    .custom-switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+    .custom-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #e5e7eb;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #3b82f6;
+    }
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+    .custom-range {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 5px;
+      background: #e5e7eb;
+      outline: none;
+    }
+    .custom-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+    }
+    .custom-range::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+      border: none;
+    }
+    .custom-select {
+      position: relative;
+      display: inline-block;
+    }
+    .custom-select select {
+      display: none;
+    }
+    .select-selected {
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .select-items {
+      position: absolute;
+      background-color: white;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin-top: 4px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .select-hide {
+      display: none;
+    }
+    .select-items div {
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    .select-items div:hover, .same-as-selected {
+      background-color: #f3f4f6;
+    }
+    .color-option {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .color-option.selected {
+      border-color: #3b82f6;
+    }
+    .hero-section {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0) 100%), url('https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: right center;
+    }
+    /* New styles for our additions */
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      z-index: 40;
+    }
+    .mobile-menu.active {
+      display: block;
+    }
+    .product-modal {
+      transition: all 0.3s ease;
+    }
+    .cart-drawer {
+      transition: transform 0.3s ease;
+    }
+    @media (min-width: 768px) {
+      .mobile-menu {
+        display: flex;
+        position: static;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center">
+        <a href="#" class="font-['Pacifico'] text-2xl text-primary mr-10">Kenjin</a>
+        <nav id="mainNav" class="mobile-menu md:flex space-x-8">
+          <a href="#" class="text-gray-900 font-medium hover:text-primary transition block md:inline-block py-2 md:py-0">Home</a>
+          <a href="#" class="text-gray-500 hover:text-primary transition block md:inline-block py-2 md:py-0">Collections</a>
+          <a href="#" class="text-gray-500 hover:text-primary transition block md:inline-block py-2 md:py-0">Customize</a>
+          <a href="#" class="text-gray-500 hover:text-primary transition block md:inline-block py-2 md:py-0">Size Guide</a>
+          <a href="#" class="text-gray-500 hover:text-primary transition block md:inline-block py-2 md:py-0">Contact</a>
+        </nav>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <button class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary transition">
+            <i class="ri-search-line ri-lg"></i>
+          </button>
+        </div>
+        <div class="relative">
+          <button class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary transition">
+            <i class="ri-user-line ri-lg"></i>
+          </button>
+        </div>
+        <div class="relative">
+          <button class="cart-button w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary transition">
+            <i class="ri-shopping-cart-line ri-lg"></i>
+            <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+          </button>
+        </div>
+        <button id="mobileMenuButton" class="md:hidden w-10 h-10 flex items-center justify-center text-gray-500">
+          <i class="ri-menu-line ri-lg"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section py-20 md:py-32">
+    <div class="container mx-auto px-4 w-full">
+      <div class="max-w-xl">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Kenjin King of School Sweaters Embroidery</h1>
+        <p class="text-lg text-gray-600 mb-8">
+          Premium quality sweaters with customizable designs, perfect for
+          school pride, teams, and special events.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <button class="bg-primary text-white px-6 py-3 font-medium !rounded-button whitespace-nowrap hover:bg-blue-600 transition">
+            Make an Order Now
+          </button>
+          <button class="bg-white border border-gray-300 text-gray-700 px-6 py-3 font-medium !rounded-button whitespace-nowrap hover:bg-gray-50 transition">
+            Customize
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Categories -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Shop by Category</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded shadow-md overflow-hidden hover:shadow-lg transition">
+          <div class="h-64 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+              alt="Crew Neck Sweaters"
+              class="w-full h-full object-cover object-top"
+            />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Crew Neck Sweaters</h3>
+            <p class="text-gray-600 mb-4">
+              Classic style with comfortable fit for everyday wear
+            </p>
+            <a href="#" class="text-primary font-medium flex items-center">
+              Shop Collection
+              <i class="ri-arrow-right-line ri-lg ml-2"></i>
+            </a>
+          </div>
+        </div>
+        <div class="bg-white rounded shadow-md overflow-hidden hover:shadow-lg transition">
+          <div class="h-64 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+              alt="V-Neck Sweaters"
+              class="w-full h-full object-cover object-top"
+            />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">V-Neck Sweaters</h3>
+            <p class="text-gray-600 mb-4">
+              Elegant design perfect for formal school events
+            </p>
+            <a href="#" class="text-primary font-medium flex items-center">
+              Shop Collection
+              <i class="ri-arrow-right-line ri-lg ml-2"></i>
+            </a>
+          </div>
+        </div>
+        <div class="bg-white rounded shadow-md overflow-hidden hover:shadow-lg transition">
+          <div class="h-64 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+              alt="Quarter-Zip Sweaters"
+              class="w-full h-full object-cover object-top"
+            />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Quarter-Zip Sweaters</h3>
+            <p class="text-gray-600 mb-4">
+              Versatile style with added warmth and comfort
+            </p>
+            <a href="#" class="text-primary font-medium flex items-center">
+              Shop Collection
+              <i class="ri-arrow-right-line ri-lg ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-start mb-8">
+        <div>
+          <h2 class="text-3xl font-bold mb-2">Best Sellers</h2>
+          <p class="text-gray-600">Our most popular school sweater designs</p>
+        </div>
+        <div class="flex items-center mt-4 md:mt-0 space-x-4">
+          <div class="relative">
+            <button id="sortButton" class="flex items-center border border-gray-300 rounded px-4 py-2 text-sm !rounded-button whitespace-nowrap">
+              <span>Sort by: Popular</span>
+              <i class="ri-arrow-down-s-line ri-lg ml-2"></i>
+            </button>
+            <div id="sortDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg z-10">
+              <div class="py-1">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Popular</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Price: Low to High</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Price: High to Low</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Newest</a>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <button id="filterButton" class="flex items-center border border-gray-300 rounded px-4 py-2 text-sm !rounded-button whitespace-nowrap">
+              <span>Filter</span>
+              <i class="ri-filter-line ri-lg ml-2"></i>
+            </button>
+            <div id="filterDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg z-10">
+              <div class="p-4">
+                <h4 class="font-medium mb-2">Style</h4>
+                <div class="space-y-2 mb-4">
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">Crew Neck</span>
+                  </label>
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">V-Neck</span>
+                  </label>
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">Quarter-Zip</span>
+                  </label>
+                </div>
+                <h4 class="font-medium mb-2">Size</h4>
+                <div class="space-y-2 mb-4">
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">XS</span>
+                  </label>
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">S</span>
+                  </label>
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">M</span>
+                  </label>
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">L</span>
+                  </label>
+                  <label class="custom-checkbox flex items-center">
+                    <input type="checkbox" />
+                    <span class="checkmark mr-2"></span>
+                    <span class="text-sm">XL</span>
+                  </label>
+                </div>
+                <div class="flex justify-between">
+                  <button class="text-gray-600 text-sm">Clear All</button>
+                  <button class="bg-primary text-white px-4 py-2 text-sm !rounded-button whitespace-nowrap">
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Product 1 -->
+        <div class="bg-white rounded overflow-hidden group product-item">
+          <div class="relative h-80 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+              alt="Classic Crew Neck"
+              class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-300"
+            />
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <button class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-md">
+              <i class="ri-heart-line ri-lg text-gray-600"></i>
+            </button>
+            <div class="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 py-3 px-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              <button class="quick-view-button w-full bg-primary text-white py-2 !rounded-button whitespace-nowrap">
+                Quick View
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-medium mb-1">Classic Crew Neck</h3>
+            <p class="text-gray-500 text-sm mb-2">Navy Blue</p>
+            <div class="flex items-center mb-3">
+              <div class="flex space-x-1">
+                <div class="w-5 h-5 rounded-full bg-blue-900 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-red-800 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-green-800 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-gray-800 border border-gray-200"></div>
+              </div>
+              <span class="text-sm text-gray-500 ml-2">+2 colors</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-semibold price">UGX 20,000</span>
+              <div class="flex items-center">
+                <div class="flex">
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-half-fill ri-sm text-yellow-400"></i>
+                </div>
+                <span class="text-xs text-gray-500 ml-1">(42)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="bg-white rounded overflow-hidden group product-item">
+          <div class="relative h-80 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+              alt="Premium V-Neck"
+              class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-300"
+            />
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <button class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-md">
+              <i class="ri-heart-line ri-lg text-gray-600"></i>
+            </button>
+            <div class="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 py-3 px-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              <button class="quick-view-button w-full bg-primary text-white py-2 !rounded-button whitespace-nowrap">
+                Quick View
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-medium mb-1">Premium V-Neck</h3>
+            <p class="text-gray-500 text-sm mb-2">Burgundy</p>
+            <div class="flex items-center mb-3">
+              <div class="flex space-x-1">
+                <div class="w-5 h-5 rounded-full bg-red-800 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-blue-900 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-gray-800 border border-gray-200"></div>
+              </div>
+              <span class="text-sm text-gray-500 ml-2">+1 color</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-semibold price">UGX 20,000</span>
+              <div class="flex items-center">
+                <div class="flex">
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                </div>
+                <span class="text-xs text-gray-500 ml-1">(38)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="bg-white rounded overflow-hidden group product-item">
+          <div class="relative h-80 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+              alt="Athletic Quarter-Zip"
+              class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-300"
+            />
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <div class="absolute top-4 left-4 bg-primary text-white text-xs font-medium px-2 py-1 rounded">
+              New
+            </div>
+            <button class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-md">
+              <i class="ri-heart-line ri-lg text-gray-600"></i>
+            </button>
+            <div class="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 py-3 px-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              <button class="quick-view-button w-full bg-primary text-white py-2 !rounded-button whitespace-nowrap">
+                Quick View
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-medium mb-1">Athletic Quarter-Zip</h3>
+            <p class="text-gray-500 text-sm mb-2">Forest Green</p>
+            <div class="flex items-center mb-3">
+              <div class="flex space-x-1">
+                <div class="w-5 h-5 rounded-full bg-green-800 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-blue-900 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-gray-800 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-red-800 border border-gray-200"></div>
+              </div>
+              <span class="text-sm text-gray-500 ml-2">+3 colors</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-semibold price">UGX 22,000</span>
+              <div class="flex items-center">
+                <div class="flex">
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-line ri-sm text-yellow-400"></i>
+                </div>
+                <span class="text-xs text-gray-500 ml-1">(24)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 4 -->
+        <div class="bg-white rounded overflow-hidden group product-item">
+          <div class="relative h-80 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+              alt="Classic Cardigan"
+              class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-300"
+            />
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <button class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-md">
+              <i class="ri-heart-line ri-lg text-gray-600"></i>
+            </button>
+            <div class="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 py-3 px-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              <button class="quick-view-button w-full bg-primary text-white py-2 !rounded-button whitespace-nowrap">
+                Quick View
+              </button>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-medium mb-1">Classic Cardigan</h3>
+            <p class="text-gray-500 text-sm mb-2">Heather Gray</p>
+            <div class="flex items-center mb-3">
+              <div class="flex space-x-1">
+                <div class="w-5 h-5 rounded-full bg-gray-500 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-blue-900 border border-gray-200"></div>
+                <div class="w-5 h-5 rounded-full bg-red-800 border border-gray-200"></div>
+              </div>
+              <span class="text-sm text-gray-500 ml-2">+1 color</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-semibold price">UGX 24,000</span>
+              <div class="flex items-center">
+                <div class="flex">
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-fill ri-sm text-yellow-400"></i>
+                  <i class="ri-star-half-fill ri-sm text-yellow-400"></i>
+                </div>
+                <span class="text-xs text-gray-500 ml-1">(31)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-10">
+        <button class="border border-gray-300 text-gray-700 px-6 py-3 font-medium !rounded-button whitespace-nowrap hover:bg-gray-50 transition">
+          View All Products
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Quick View Modal -->
+  <div id="productModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6">
+        <button id="closeModal" class="absolute top-4 right-4 text-2xl">&times;</button>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <img id="modalProductImage" src="" alt="" class="w-full rounded">
+            <div class="flex mt-4 gap-2">
+              <div class="w-16 h-16 border rounded cursor-pointer">
+                <img src="" alt="" class="w-full h-full object-cover">
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 id="modalProductName" class="text-2xl font-bold mb-2"></h3>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400 mr-2">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-half-fill"></i>
+              </div>
+              <span class="text-sm text-gray-500">(42 reviews)</span>
+            </div>
+            <p id="modalProductPrice" class="text-2xl
